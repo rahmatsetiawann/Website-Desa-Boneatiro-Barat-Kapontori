@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desa Boneatiro Barat</title>
+  <style>
+    body, ul { margin: 0; padding: 0; }
+    ul { list-style: none; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: #2c3e50;
+      color: white;
+      position: relative; /* Diperlukan untuk toggle menu mobile */
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo img { width: 40px; }
+    .logo-text h1 { margin: 0; font-size: 20px; }
+    .logo-text p { margin: 0; font-size: 12px; color: #ddd; }
+
+    /* Tombol Menu Mobile */
+    .menu-toggle {
+        display: none; /* Sembunyikan di desktop */
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+        cursor: pointer;
+    }
+    .menu-toggle span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background: white;
+        transition: all 0.3s linear;
+        transform-origin: 1px;
+    }
+
+    nav {
+        display: flex;
+    }
+    nav ul { 
+        display: flex; 
+        gap: 20px; 
+    }
+    nav ul li { position: relative; }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      padding: 8px;
+      display: block;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover { color: #f39c12; }
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #34495e;
+      min-width: 180px;
+      border-radius: 4px;
+      z-index: 1000;
+      list-style: none; /* Pastikan tidak ada bullet di dropdown */
+      padding: 5px 0;
+    }
+    .dropdown li a { padding: 10px; font-weight: normal; }
+    .dropdown li a:hover { background: #2c3e50; color: #f39c12; }
+    nav ul li:hover .dropdown { display: block; }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                  url('Desa Boneatiro barat.jpeg') no-repeat center/cover;
+      color: white;
+    }
+    .hero h2 { font-size: 32px; margin-bottom: 10px; }
+    .hero p { font-size: 18px; margin-bottom: 20px; }
+    .hero a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #f39c12;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .hero a:hover { background: #d35400; }
+
+    section { padding: 40px 20px; }
+    .section-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 26px;
+      color: #2c3e50;
+    }
+    .about {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+    .about ul {
+        text-align:left; 
+        max-width:600px; 
+        margin:20px auto;
+        list-style: disc; /* Tambahkan bullet point untuk Misi */
+        padding-left: 20px;
+    }
+
+    /* Wisata */
+    .wisata-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .wisata-item {
+      background: #f9f9f9;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .wisata-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .wisata-item h3 {
+      margin: 10px 0;
+      color: #2c3e50;
+    }
+    .wisata-item p {
+      padding: 0 15px 20px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    /* Galeri */
+    .galeri-container {
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .galeri-container img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+    .galeri-container img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Kontak */
+    .kontak-container {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    .kontak-info {
+      font-size: 15px;
+      color: #333;
+    }
+    .kontak-info p {
+      margin: 10px 0;
+    }
+    .kontak-form input, .kontak-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .kontak-form button {
+      background: #2c3e50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .kontak-form button:hover {
+      background: #f39c12;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #2c3e50;
+      color: white;
+      margin-top: 40px;
+    }
+
+    /* Responsif */
+    @media(max-width: 768px) {
+      /* Header & Navigasi Mobile */
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 15px 20px;
+      }
+      nav {
+        position: absolute;
+        top: 70px; /* Di bawah header */
+        left: 0;
+        width: 100%;
+        background: #2c3e50;
+        display: none; /* Sembunyikan secara default */
+        z-index: 999;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      nav.active {
+          display: flex; /* Tampilkan saat aktif */
+      }
+      .menu-toggle {
+        display: flex; /* Tampilkan tombol menu */
+      }
+      nav ul {
+        flex-direction: column;
+        width: 100%;
+      }
+      nav ul li {
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+      }
+      nav ul li a {
+          padding: 12px 20px;
+      }
+      .dropdown {
+        position: static; /* Dropdown menjadi inline */
+        width: 100%;
+        background: #34495e;
+        border-radius: 0;
+        padding: 0;
+      }
+      .dropdown li a {
+        padding: 8px 30px; /* Indentasi submenu */
+        font-size: 14px;
+        background: #34495e;
+      }
+      nav ul li:hover .dropdown { display: block; } /* Pertahankan hover */
+
+      /* Tata Letak Konten */
+      .kontak-container {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding: 40px 15px;
+      }
+      .hero h2 {
+        font-size: 26px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+      section {
+        padding: 30px 15px;
+      }
+      .section-title {
+        font-size: 22px;
+      }
+      /* Galeri dan Wisata */
+      .wisata-container, .galeri-container {
+        grid-template-columns: 1fr; /* Tumpuk item */
+      }
+      .galeri-container img {
+          height: auto;
+      }
+    }
+    
+    @media(min-width: 769px) and (max-width: 1024px) {
+      /* Penyesuaian untuk Tablet */
+      header {
+        padding: 15px 20px;
+      }
+      nav ul {
+        gap: 15px;
+      }
+      .kontak-container {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="Logo Desa.png" alt="Logo Desa Boneatiro Barat">
+      <div class="logo-text">
+        <h1>Desa Boneatiro Barat</h1>
+        <p>Kec. Kapuntori, Kab. Buton</p>
+      </div>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav id="main-nav">
+      <ul>
+        <li><a href="#beranda">Beranda</a></li>
+        <li>
+          <a href="#profil">Profil ▾</a>
+          <ul class="dropdown">
+            <li><a href="#visi">Visi & Misi</a></li>
+            <li><a href="#sejarah">Sejarah</a></li>
+            <li><a href="#struktur">Struktur Organisasi</a></li>
+          </ul>
+        </li>
+        <li><a href="#berita">Berita</a></li>
+        <li><a href="#wisata">Wisata</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" id="beranda">
+    <h2>Selamat Datang di Website Desa Boneatiro Barat</h2>
+    <p>Desa dengan keindahan alam dan budaya di Kecamatan Kapuntori, Kabupaten Buton</p>
+    <a href="#profil">Jelajahi Desa Kami</a>
+  </section>
+
+  <section id="profil">
+    <h2 class="section-title">Profil Desa Boneatiro Barat</h2>
+    <div class="about">
+      <p>Desa Boneatiro Barat terletak di Kecamatan Kapuntori, Kabupaten Buton. Desa ini dikenal dengan Wisata Lumba-Lumba serta potensi wisata yang luar biasa.</p>
+      <p>Warga desa hidup dengan rukun, mengandalkan pertanian, perikanan, dan sektor pariwisata.</p>
+      <p><b>Moto: "Alam Lestari, Desa Berseri"</b></p>
+    </div>
+  </section>
+
+  <section id="visi">
+    <h2 class="section-title">Visi & Misi</h2>
+    <div class="about">
+      <p><b>Visi:</b> Mewujudkan Desa Boneatiro Barat yang maju, mandiri, dan sejahtera.</p>
+      <p><b>Misi:</b></p>
+      <ul>
+        <li>Meningkatkan kualitas pendidikan dan kesehatan masyarakat.</li>
+        <li>Mengembangkan potensi pertanian dan pariwisata desa.</li>
+        <li>Mendorong pembangunan berkelanjutan berbasis kearifan lokal.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="sejarah">
+    <h2 class="section-title">Sejarah Desa</h2>
+    <div class="about">
+      <p>Desa Boneatiro Barat adalah desa pemekaran dari Desa Boneatiro pada tahun 2010.
+
+Nama "Boneatiro" berasal dari bahasa Wolio, yaitu "Bone" (pasir) dan "iy ntiro" (yang ditatap), sehingga berarti hamparan pasir yang dilihat dari kejauhan. Sesuai namanya, Boneatiro Barat adalah desa pesisir di Pulau Buton yang menghadap ke Selat Buton.
+
+Boneatiro dikenal dalam sejarah Kesultanan Buton sebagai lokasi terbunuhnya panglima perang Tobelo, La Bolontio, yang diyakini dimakamkan di Boneatiro Barat.
+
+Penduduk asli desa ini berasal dari Kolowa (Kec. Gu) yang berimigrasi sejak tahun 1927 karena ketidaksetujuan terhadap kebijakan pemerintah setempat saat itu. Setelah hidup berpindah-pindah, pada tahun 1961, tempat yang mereka tempati di pesisir Pulau Buton resmi menjadi Desa Boneatiro dengan kepala desa pertama La Heri.
+
+Pada tahun 2010, Desa Boneatiro dimekarkan menjadi dua, yaitu Desa Boneatiro dan Desa Boneatiro Barat. Kepala desa pertama (pelaksana) Boneatiro Barat adalah H. Bolo Karim.</p>
+    </div>
+  </section>
+
+  <section id="struktur">
+    <h2 class="section-title">Struktur Organisasi</h2>
+    <div class="about">
+      <p>Struktur organisasi Desa Boneatiro Barat terdiri dari Kepala Desa, perangkat desa, serta lembaga-lembaga masyarakat yang bekerja sama untuk pembangunan desa.</p>
+      <img src="struktur organisasi desa.jpeg" alt="Struktur Organisasi Desa" style="max-width:100%; border:1px solid #ccc; border-radius:8px; margin-top:15px;">
+    </div>
+  </section>
+
+  <section id="wisata">
+    <h2 class="section-title">Wisata Desa Boneatiro Barat</h2>
+    <div class="wisata-container">
+      <div class="wisata-item">
+        <img src="lumba-lumba.jpg" alt="Lumba-Lumba">
+        <h3>Lumba-Lumba</h3>
+        <p>Lumba-lumba dikenal sebagai mamalia laut yang cerdas dan lincah, dengan atraksi meloncat dan berenang yang akan menjadi pemandangan tak terlupakan.</p>
+      </div>
+      <div class="wisata-item">
+        <img src="Puncak.jpeg" alt="Puncak Saujana">
+        <h3>Puncak Saujana</h3>
+        <p>Di Boneatiro Barat terdapat tebing tinggi dengan ketinggian sekitar 400 meter yang menghadap ke laut. Tempat ini ideal untuk menikmati pemandangan laut yang luas atau "saujana" (sejauh mata memandang). Pemandangan dari puncak tebing ini pasti menawarkan panorama perpaduan hutan dan laut yang menakjubkan.</p>
+      </div>
+      <div class="wisata-item">
+        <img src="pulau pendek.jpg" alt="Pulau Pendek">
+        <h3>Pulau Pendek</h3>
+        <p>Lupakan sejenak keramaian. Sambutlah Pulau Pendek, permata tersembunyi di Kabupaten Buton, Sulawesi Tenggara, yang menawarkan harmoni sempurna antara keajaiban laut dan misteri daratan. Ini adalah destinasi eksklusif yang memanggil jiwa petualang dan pecinta kedamaian.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="galeri">
+    <h2 class="section-title">Galeri Kegiatan Warga</h2>
+    <div class="galeri-container">
+      <img src="Gotong Royong.jpeg" alt="Gotong royong warga">
+      <img src="tarian adat.jpeg" alt="Acara adat desa">
+      <img src="Anak Anak Bermain di Desa.jpeg" alt="Anak-anak bermain di desa">
+      <img src="Kerja Bakti.jpeg" alt="Kegiatan pertanian">
+      <img src="Acara Seminar.jpeg" alt="Kegiatan nelayan">
+      <img src="Pertemuan.jpeg" alt="Acara pertemuan warga">
+    </div>
+  </section>
+
+  <section id="kontak">
+    <h2 class="section-title">Kontak Desa Boneatiro Barat</h2>
+    <div class="kontak-container">
+      <div class="kontak-info">
+        <p><b>Alamat:</b> Desa Boneatiro Barat, Kec. Kapuntori, Kab. Buton, Sulawesi Tenggara</p>
+        <p><b>Telepon:</b> +62 812 3456 7890</p>
+        <p><b>Email:</b> Boneatiro Barat.desa@gmail.com</p>
+        <p><b>Jam Kerja:</b> Senin - Jumat, 08.00 - 16.00 WITA</p>
+      </div>
+      <div class="kontak-form">
+        <form>
+          <input type="text" name="nama" placeholder="Nama Anda" required>
+          <input type="email" name="email" placeholder="Email Anda" required>
+          <textarea name="pesan" rows="5" placeholder="Tulis pesan Anda..." required></textarea>
+          <button type="submit">Kirim Pesan</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Desa Boneatiro Barat. Semua Hak Dilindungi.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+        const nav = document.getElementById('main-nav');
+        nav.classList.toggle('active');
+        // Bonus: Efek animasi untuk tombol burger
+        document.querySelector('.menu-toggle').classList.toggle('active');
+    }
+
+    // Menutup menu saat link di klik di mobile
+    document.querySelectorAll('#main-nav a').forEach(item => {
+        item.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                document.getElementById('main-nav').classList.remove('active');
+                document.querySelector('.menu-toggle').classList.remove('active');
+            }
+        });
+    });
+  </script>
+
+</body>
+</html>
